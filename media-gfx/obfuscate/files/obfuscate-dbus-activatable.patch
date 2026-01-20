@@ -1,0 +1,56 @@
+From 7b9b88095b9f85584ee1d0c40025449dbf7ddbe6 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ball=C3=B3=20Gy=C3=B6rgy?= <ballogyor@gmail.com>
+Date: Sat, 26 Jul 2025 20:40:19 +0200
+Subject: [PATCH] Add D-Bus service file
+
+And mark the application as D-Bus activatable. This allows application
+launchers to activate it via D-Bus.
+---
+ data/com.belmoussaoui.Obfuscate.desktop.in.in |  1 +
+ data/com.belmoussaoui.Obfuscate.service.in    |  3 +++
+ data/meson.build                              | 10 ++++++++++
+ 3 files changed, 14 insertions(+)
+ create mode 100644 data/com.belmoussaoui.Obfuscate.service.in
+
+diff --git a/data/com.belmoussaoui.Obfuscate.desktop.in.in b/data/com.belmoussaoui.Obfuscate.desktop.in.in
+index 36d7063..ddb88c3 100644
+--- a/data/com.belmoussaoui.Obfuscate.desktop.in.in
++++ b/data/com.belmoussaoui.Obfuscate.desktop.in.in
+@@ -10,6 +10,7 @@ Keywords=Censor;Private;Image;Obfuscate;
+ # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+ Icon=@icon@
+ StartupNotify=true
++DBusActivatable=true
+ MimeType=image/png;image/jpeg;image/bmp
+ # Translators: Do NOT translate or transliterate this text (these are enum types)!
+ X-Purism-FormFactor=Workstation;Mobile;
+diff --git a/data/com.belmoussaoui.Obfuscate.service.in b/data/com.belmoussaoui.Obfuscate.service.in
+new file mode 100644
+index 0000000..130e55f
+--- /dev/null
++++ b/data/com.belmoussaoui.Obfuscate.service.in
+@@ -0,0 +1,3 @@
++[D-BUS Service]
++Name=@app-id@
++Exec=@bindir@/obfuscate --gapplication-service
+diff --git a/data/meson.build b/data/meson.build
+index ab66538..e8e1682 100644
+--- a/data/meson.build
++++ b/data/meson.build
+@@ -80,3 +80,13 @@ gnome.compile_resources(
+   install_dir: pkgdatadir,
+ )
+ 
++# D-Bus service file
++service_conf = configuration_data()
++service_conf.set('app-id', application_id)
++service_conf.set('bindir', bindir)
++configure_file(
++  input: 'com.belmoussaoui.Obfuscate.service.in',
++  output: '@0@.service'.format(application_id),
++  configuration: service_conf,
++  install_dir: datadir / 'dbus-1' / 'services'
++)
+-- 
+GitLab
+

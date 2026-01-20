@@ -1,0 +1,95 @@
+From 2e9213c1c3812442de45321a6c9ff482ea0b809f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ball=C3=B3=20Gy=C3=B6rgy?= <ballogyor@gmail.com>
+Date: Sat, 26 Jul 2025 20:58:20 +0200
+Subject: [PATCH] Add "new-window" command-line option
+
+This allows the user to choose the desired action when the application is
+launched: when the "new-window" command-line option is requested, a new
+window will be opened, otherwise raise the existing window.
+
+Specify the action also in the desktop file. This allows application
+launchers to provide direct access to this action.
+---
+ data/com.belmoussaoui.Obfuscate.desktop.in.in |  7 ++++
+ src/application.rs                            | 42 ++++++++++++++++++-
+ 2 files changed, 47 insertions(+), 2 deletions(-)
+
+diff --git a/data/com.belmoussaoui.Obfuscate.desktop.in.in b/data/com.belmoussaoui.Obfuscate.desktop.in.in
+index 36d7063..a1b9c76 100644
+--- a/data/com.belmoussaoui.Obfuscate.desktop.in.in
++++ b/data/com.belmoussaoui.Obfuscate.desktop.in.in
+@@ -13,3 +13,10 @@ StartupNotify=true
+ MimeType=image/png;image/jpeg;image/bmp
+ # Translators: Do NOT translate or transliterate this text (these are enum types)!
+ X-Purism-FormFactor=Workstation;Mobile;
++Actions=new-window;
++
++[Desktop Action new-window]
++Exec=obfuscate --new-window
++Name=New Window
++# TRANSLATORS: Do NOT translate or transliterate this text (this is an icon file name)!
++Icon=window-new
+diff --git a/src/application.rs b/src/application.rs
+index ddb699a..7f05a30 100644
+--- a/src/application.rs
++++ b/src/application.rs
+@@ -17,8 +17,39 @@ mod imp {
+         type Type = super::Application;
+     }
+ 
+-    impl ObjectImpl for Application {}
++    impl ObjectImpl for Application {
++        fn constructed(&self) {
++            self.parent_constructed();
++
++            self.obj().add_main_option(
++                "new-window",
++                glib::Char::from(b'w'),
++                glib::OptionFlags::NONE,
++                glib::OptionArg::None,
++                &gettext("Open a new window"),
++                None,
++            );
++        }
++    }
++
+     impl ApplicationImpl for Application {
++        fn handle_local_options(&self, options: &glib::VariantDict) -> glib::ExitCode {
++            let app = self.obj();
++
++            if options.contains("new-window") {
++                if let Err(err) = app.register(None::<&gio::Cancellable>) {
++                    log::error!("Failed to register the application: {err}");
++                }
++
++                if app.is_remote() {
++                    app.activate_action("new-window", None);
++                    return glib::ExitCode::SUCCESS;
++                }
++            }
++
++            self.parent_handle_local_options(options)
++        }
++
+         fn startup(&self) {
+             self.parent_startup();
+             let app = self.obj();
+@@ -31,7 +62,14 @@ mod imp {
+ 
+         fn activate(&self) {
+             self.parent_activate();
+-            let window = self.obj().create_window();
++            let app = self.obj();
++
++            if let Some(window) = app.active_window() {
++                window.present();
++                return;
++            }
++
++            let window = app.create_window();
+             window.present();
+             log::info!("Created application window.");
+         }
+-- 
+GitLab
+
