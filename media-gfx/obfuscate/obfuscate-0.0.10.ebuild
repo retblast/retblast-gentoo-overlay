@@ -187,12 +187,10 @@ src_configure() {
 
 pkg_postinst() {
 	gnome2_schemas_update
-	xdg_desktop_database_update
-	xdg_icon_cache_update
+	xdg_pkg_postinst
 }
 
 pkg_postrm() {
 	gnome2_schemas_update
-	xdg_desktop_database_update
-	xdg_icon_cache_update
+	xdg_pkg_postrm
 }
