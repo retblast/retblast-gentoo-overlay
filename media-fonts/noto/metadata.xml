@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM 'https://www.gentoo.org/dtd/metadata.dtd'>
+<pkgmetadata>
+	<maintainer type="person">
+		<email>retblast@proton.me</email>
+		<description>I just edited the official ebuild to make it install OTFs</description>
+	</maintainer>
+</pkgmetadata>
