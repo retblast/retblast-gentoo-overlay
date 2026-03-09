@@ -115,7 +115,7 @@ CRATES="
 	winnow@0.6.5
 "
 
-inherit cargo meson gnome2-utils
+inherit cargo meson gnome2-utils xdg
 
 # Short one-line description of this package.
 DESCRIPTION="Censor private information."

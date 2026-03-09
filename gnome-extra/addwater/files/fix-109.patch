@@ -1,0 +1,15 @@
+--- a/src/gui/profile_selector.py
++++ b/src/gui/profile_selector.py
+@@ -71,9 +71,12 @@
+         for i, each in enumerate(profile_list):
+             if each["id"] == selected_profile_id:
+                 self.set_selected(i)
++                self.selected_profile = each["id"]
+                 return
+ 
+         self.set_selected(0)
++        if profile_list:
++            self.selected_profile = profile_list[0]["id"]
+ 
+     def set_profile(self) -> None:
+         with self.freeze_notify():

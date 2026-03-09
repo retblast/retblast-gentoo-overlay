@@ -1,7 +1,7 @@
 # Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 EAPI=8
-inherit meson gnome2-utils
+inherit meson gnome2-utils xdg
 
 DESCRIPTION=" Installer for the Firefox GNOME theme."
 HOMEPAGE="https://github.com/largestgithubuseronearth/addwater"
@@ -20,15 +20,20 @@ BDEPEND="
 "
 
 RDEPEND="
-  dev-lang/python:3
+  dev-lang/python
   dev-python/pygobject
-  gui-libs/gtk:4
+  gui-libs/gtk
   gui-libs/libadwaita
   dev-libs/glib
   dev-libs/libportal[gtk4]
   dev-python/requests
   dev-python/packaging
 "
+
+PATCHES=(
+  "${FILESDIR}"/fix-109.patch
+)
+
 src_prepare() {
   default
 }
