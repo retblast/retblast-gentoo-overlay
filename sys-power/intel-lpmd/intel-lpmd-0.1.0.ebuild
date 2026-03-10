@@ -24,7 +24,7 @@ BDEPEND="
 DEPEND="
     dev-libs/glib:2
     dev-libs/libxml2
-    net-libs/libnl:3
+    dev-libs/libnl:3
     sys-apps/systemd
     sys-power/upower
 "
