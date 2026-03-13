@@ -7,8 +7,8 @@ inherit font
 DESCRIPTION="Google's font family that aims to support all the world's languages. CJK Sans OTF variant"
 HOMEPAGE="https://fonts.google.com/noto https://github.com/notofonts/notofonts.github.io"
 
-SRC_URI="https://github.com/notofonts/noto-cjk/releases/download/Sans${PV}/04_NotoSansCJK-OTF.zip -> ${P}.zip"
-S="${WORKDIR}/OTF"
+SRC_URI="https://github.com/notofonts/noto-cjk/releases/download/Sans${PV}/02_NotoSansCJK-TTF-VF.zip -> ${P}.zip"
+S="${WORKDIR}/Variable/TTF"
 
 LICENSE="OFL-1.1"
 SLOT="0"
@@ -17,12 +17,10 @@ KEYWORDS="amd64"
 
 RESTRICT="binchecks strip"
 
-FONT_SUFFIX="otf"
-
+FONT_SUFFIX="ttf"
 
 src_install() {
-	mkdir install-unhinted || die
-	mv */*.otf install-unhinted/. || die
+	mkdir install-hinted-variable || die
+	mv */*.ttf install-hinted-variable/. || die
 
-	FONT_S="${S}/install-unhinted/" font_src_install
-}
+	FONT_S="${S}/install-hinted-variable/" font_src_install

@@ -23,16 +23,16 @@ BDEPEND="
 
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86 ~x64-macos"
 
-FONT_SUFFIX="otf"
+FONT_SUFFIX="ttf"
 RESTRICT="binchecks strip"
 
 BDEPEND="app-arch/unzip"
 
-S="${WORKDIR}/${MY_PN}-${PV}"
+S="${WORKDIR}/${MY_PN}-${PV}/ttfautohint"
 
 src_prepare() {
     default
 
-    ${FILESDIR}/bake-opentype-features.fish --srcPath=$PWD --localPath=$PWD --fontFormat=otf
+    ${FILESDIR}/bake-opentype-features.fish --srcPath=$PWD --localPath=$PWD --inputFontFormat=ttf
     
 }

@@ -1,4 +1,4 @@
-# Copyright 2025 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -6,19 +6,17 @@ EAPI=8
 inherit font
 
 MY_PN="Inter"
-DESCRIPTION="Inter font family"
+DESCRIPTION="Inter font family."
 HOMEPAGE="https://rsms.me/inter/"
 SRC_URI="https://github.com/rsms/${PN}/releases/download/v${PV}/${MY_PN}-${PV}.zip -> ${P}.zip"
-
-
 
 LICENSE="OFL-1.1"
 SLOT="0"
 
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86 ~x64-macos"
 
-FONT_SUFFIX="otf"
-S="${WORKDIR}/extras/${FONT_SUFFIX}"
+FONT_SUFFIX="ttc"
 RESTRICT="binchecks strip"
 
+S="${WORKDIR}/"
 BDEPEND="app-arch/unzip"

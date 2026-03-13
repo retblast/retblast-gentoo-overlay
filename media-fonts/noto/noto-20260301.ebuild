@@ -8,7 +8,7 @@ DESCRIPTION="Google's font family that aims to support all the world's languages
 HOMEPAGE="https://fonts.google.com/noto https://github.com/notofonts/notofonts.github.io"
 
 # Have to update this with each "release"
-COMMIT="e3bdd5e75581e2b46d93343ec98594f3c89669c0"
+COMMIT="67b512485069e86f2e06413c46b8394d3358021d"
 SRC_URI="https://github.com/notofonts/notofonts.github.io/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/notofonts.github.io-${COMMIT}"
 
