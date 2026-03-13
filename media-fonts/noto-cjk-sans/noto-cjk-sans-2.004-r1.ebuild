@@ -24,3 +24,4 @@ src_install() {
 	mv */*.ttf install-hinted-variable/. || die
 
 	FONT_S="${S}/install-hinted-variable/" font_src_install
+}

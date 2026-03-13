@@ -8,4 +8,12 @@ After creating the ebuild, do
   ebuild $ebuild clean test install
   ebuild clean install merge
 ```
+
 If stuff works fine, can be pushed to the repo.
+
+## Updating a Manifest file
+```
+  rm /var/cache/distfiles/file
+  rm path/to/Manifest
+```
+Then do the manifest generation again

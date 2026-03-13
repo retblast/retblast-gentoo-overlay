@@ -1,0 +1,14 @@
+BDEPEND=X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+DEFINED_PHASES=install postinst postrm setup
+DESCRIPTION=Google's font family that aims to support all the world's languages. CJK Serif TTF variable variant
+EAPI=8
+HOMEPAGE=https://fonts.google.com/noto https://github.com/notofonts/notofonts.github.io
+INHERIT=font
+IUSE=X
+KEYWORDS=amd64
+LICENSE=OFL-1.1
+RESTRICT=binchecks strip
+SLOT=0
+SRC_URI=https://github.com/notofonts/noto-cjk/releases/download/Serif2.003/03_NotoSerifCJK-TTF-VF.zip -> noto-cjk-serif-2.003.zip
+_eclasses_=font	6d0c60c855c05ae2ba808d300440ded2
+_md5_=e85985c540d93b2a7122e69a75df1143
