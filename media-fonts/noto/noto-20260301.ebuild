@@ -15,7 +15,9 @@ S="${WORKDIR}/notofonts.github.io-${COMMIT}"
 LICENSE="OFL-1.1"
 SLOT="0"
 # Technically any
-KEYWORDS="amd64"
+# Keyword it because Im not chasing OTFs at the moment
+# TODO: make this install variable TTFs
+KEYWORDS="~amd64"
 
 RESTRICT="binchecks strip"
 
