@@ -16,4 +16,7 @@ If stuff works fine, can be pushed to the repo.
   rm /var/cache/distfiles/file
   rm path/to/Manifest
 ```
-Then do the manifest generation again
+Then do the manifest generation again.
+
+## Keywording
+I only keyword stuff I want to make me manually unkeyword locally for xyz reason.

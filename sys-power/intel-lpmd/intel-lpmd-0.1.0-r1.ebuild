@@ -8,7 +8,7 @@ EGIT_REPO_URI="https://github.com/intel/intel-lpmd.git"
 EGIT_BRANCH="main"
 DESCRIPTION="Intel Low Power Mode Daemon (lpmd) is a Linux daemon designed to optimize active idle power."
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 LICENSE="GPL-2"
 IUSE="doc"
 
