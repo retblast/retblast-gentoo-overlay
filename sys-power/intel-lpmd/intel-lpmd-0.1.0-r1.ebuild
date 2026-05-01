@@ -4,9 +4,8 @@
 EAPI=8
 
 inherit git-r3 autotools
-EGIT_REPO_URI="https://github.com/maciejwieczorretman/intel-lpmd.git"
-EGIT_BRANCH="main_issue_106"
-# Fork that fixes the issue #106
+EGIT_REPO_URI="https://github.com/intel/intel-lpmd.git"
+EGIT_BRANCH="main"
 DESCRIPTION="Intel Low Power Mode Daemon (lpmd) is a Linux daemon designed to optimize active idle power."
 SLOT="0"
 KEYWORDS="~amd64"
