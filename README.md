@@ -6,9 +6,9 @@ After creating the ebuild, do
 ```
   pkgdev manifest -d $distfilesFolder $ebuild
   ebuild $ebuild clean test install
-  ebuild clean install merge
+  ebuild $ebuild clean install merge
 ```
-
+$distfilesFolder usually is `/var/cache/distfiles`
 If stuff works fine, can be pushed to the repo.
 
 ## Updating a Manifest file
