@@ -16,7 +16,7 @@ SRC_URI="${HOMEPAGE}/archive/refs/tags/v${PV}.tar.gz"
 LICENSE="GPL-3+"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 
 RDEPEND="
   >=gui-libs/gtk-4.18.6-r1

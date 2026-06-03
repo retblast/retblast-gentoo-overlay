@@ -9,7 +9,7 @@ SRC_URI="https://github.com/largestgithubuseronearth/${PN}/archive/refs/tags/v${
 
 LICENSE="GPL-3+"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="debug"
 BDEPEND="
   dev-build/meson

@@ -142,7 +142,7 @@ LICENSE+="
 "
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 
 RDEPEND="
   >=gnome-base/dconf-0.40.0

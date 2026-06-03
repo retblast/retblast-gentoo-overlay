@@ -1,0 +1,16 @@
+BDEPEND=vulkan? ( dev-util/vulkan-headers )
+DEFINED_PHASES=compile install setup
+DEPEND=python_single_target_python3_12? ( dev-lang/python:3.12 ) python_single_target_python3_13? ( dev-lang/python:3.13 ) python_single_target_python3_14? ( dev-lang/python:3.14 ) vulkan? ( media-libs/vulkan-loader ) gui? ( python_single_target_python3_12? ( dev-python/customtkinter[python_targets_python3_12(-)] dev-python/darkdetect[python_targets_python3_12(-)] ) python_single_target_python3_13? ( dev-python/customtkinter[python_targets_python3_13(-)] dev-python/darkdetect[python_targets_python3_13(-)] ) python_single_target_python3_14? ( dev-python/customtkinter[python_targets_python3_14(-)] dev-python/darkdetect[python_targets_python3_14(-)] ) ) python_single_target_python3_12? ( dev-python/psutil[python_targets_python3_12(-)] dev-python/jinja2[python_targets_python3_12(-)] ) python_single_target_python3_13? ( dev-python/psutil[python_targets_python3_13(-)] dev-python/jinja2[python_targets_python3_13(-)] ) python_single_target_python3_14? ( dev-python/psutil[python_targets_python3_14(-)] dev-python/jinja2[python_targets_python3_14(-)] )
+DESCRIPTION=An easy-to-use AI text-generation software for GGML and GGUF models
+EAPI=8
+HOMEPAGE=https://github.com/LostRuins/koboldcpp
+INHERIT=python-single-r1
+IUSE=gui vulkan python_single_target_python3_12 python_single_target_python3_13 python_single_target_python3_14
+KEYWORDS=~amd64
+LICENSE=AGPL-3.0-only MIT
+RDEPEND=python_single_target_python3_12? ( dev-lang/python:3.12 ) python_single_target_python3_13? ( dev-lang/python:3.13 ) python_single_target_python3_14? ( dev-lang/python:3.14 ) vulkan? ( media-libs/vulkan-loader ) gui? ( python_single_target_python3_12? ( dev-python/customtkinter[python_targets_python3_12(-)] dev-python/darkdetect[python_targets_python3_12(-)] ) python_single_target_python3_13? ( dev-python/customtkinter[python_targets_python3_13(-)] dev-python/darkdetect[python_targets_python3_13(-)] ) python_single_target_python3_14? ( dev-python/customtkinter[python_targets_python3_14(-)] dev-python/darkdetect[python_targets_python3_14(-)] ) ) python_single_target_python3_12? ( dev-python/psutil[python_targets_python3_12(-)] dev-python/jinja2[python_targets_python3_12(-)] ) python_single_target_python3_13? ( dev-python/psutil[python_targets_python3_13(-)] dev-python/jinja2[python_targets_python3_13(-)] ) python_single_target_python3_14? ( dev-python/psutil[python_targets_python3_14(-)] dev-python/jinja2[python_targets_python3_14(-)] )
+REQUIRED_USE=^^ ( python_single_target_python3_12 python_single_target_python3_13 python_single_target_python3_14 )
+SLOT=0
+SRC_URI=https://github.com/LostRuins/koboldcpp/archive/refs/tags/v1.114.1.tar.gz -> koboldcpp-1.114.1.tar.gz
+_eclasses_=eapi9-pipestatus	d2c134036ac31c3085aebc9147f572bd	multiprocessing	45d0620f25c2f063ad6276ecd9ed9399	toolchain-funcs	58a918e3a42d0156f010dcfd43725be5	python-utils-r1	ae7ca7f9425ab1a1d2c909e225002f98	python-single-r1	47d8ac9be330c9366112b78fd4f8ce57
+_md5_=0ba966dcb43cce33dd649595a8649cc2
