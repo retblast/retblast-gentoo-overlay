@@ -41,7 +41,7 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="
 	vulkan? (
-		dev-util/shaderc
+		media-libs/shaderc
 		dev-util/vulkan-headers
 	)
 "
