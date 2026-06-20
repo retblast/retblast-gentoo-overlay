@@ -41,7 +41,7 @@ RDEPEND="
 
 DEPEND="
 	${RDEPEND}
-	dev-qt/qtbase=[dbus,gui]
+	dev-qt/qtbase[dbus,gui]
 "
 
 BDEPEND="
