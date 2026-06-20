@@ -29,10 +29,10 @@ RDEPEND="
 		dev-python/pillow[${PYTHON_USEDEP}]
 		dev-python/python-magic[${PYTHON_USEDEP}]
 	')
-	kde-plasma/plasma-workspace:6
+	kde-plasma/plasma-workspace
 	plasmoid? (
-		kde-plasma/libplasma:6
-		kde-plasma/plasma5support:6
+		kde-plasma/libplasma
+		kde-plasma/plasma5support
 	)
 	pywal? (
 		x11-misc/pywal16
@@ -41,11 +41,11 @@ RDEPEND="
 
 DEPEND="
 	${RDEPEND}
-	dev-qt/qtbase:6=[dbus,gui]
+	dev-qt/qtbase=[dbus,gui]
 "
 
 BDEPEND="
-	kde-frameworks/extra-cmake-modules:6
+	kde-frameworks/extra-cmake-modules
 "
 
 src_prepare() {
