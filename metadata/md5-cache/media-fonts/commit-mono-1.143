@@ -1,14 +1,14 @@
-BDEPEND=app-text/opentype-feature-freezer dev-python/fonttools app-shells/fish app-arch/unzip X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+BDEPEND=app-text/opentype-feature-freezer || ( ( dev-lang/python:3.14 dev-python/fonttools[python_targets_python3_14(-)] ) ( dev-lang/python:3.13 dev-python/fonttools[python_targets_python3_13(-)] ) ( dev-lang/python:3.12 dev-python/fonttools[python_targets_python3_12(-)] ) ) app-shells/fish app-arch/unzip X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
 DEFINED_PHASES=install postinst postrm prepare setup
 DESCRIPTION=Anonymous and neutral programming typeface focused on creating a better reading experience
 EAPI=8
 HOMEPAGE=https://commitmono.com/
-INHERIT=font
+INHERIT=font python-any-r1
 IUSE=X
 KEYWORDS=~alpha ~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86 ~x64-macos
 LICENSE=OFL-1.1
 RESTRICT=binchecks strip
 SLOT=0
 SRC_URI=https://github.com/eigilnikolajsen/commit-mono/releases/download/v1.143/CommitMono-1.143.zip -> commit-mono-1.143.zip
-_eclasses_=font	6d0c60c855c05ae2ba808d300440ded2
-_md5_=020b70039b7d7f28e8815ca8fd4b9b0d
+_eclasses_=font	6d0c60c855c05ae2ba808d300440ded2	eapi9-pipestatus	d2c134036ac31c3085aebc9147f572bd	multiprocessing	45d0620f25c2f063ad6276ecd9ed9399	toolchain-funcs	58a918e3a42d0156f010dcfd43725be5	python-utils-r1	18a01bee4e486884d7457cfacde74099	python-any-r1	891415dfe39ad9b41b461f2b86354af0
+_md5_=eba6336b9fc3c05a56b548d46c94b4b8
