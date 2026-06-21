@@ -28,7 +28,7 @@ BDEPEND="
 
 DEPEND="
 	>=dev-qt/qtbase-${QT_MIN}:6[gui,widgets]
-	>=dev-qt/qtdbus-${QT_MIN}:6
+	>=kde-frameworks/kdbusaddons-${KF_MIN}:6
 	>=kde-frameworks/kconfig-${KF_MIN}:6
 	>=kde-frameworks/kconfigwidgets-${KF_MIN}:6
 	>=kde-frameworks/kcoreaddons-${KF_MIN}:6
