@@ -1,4 +1,4 @@
-BDEPEND=app-arch/unzip X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+BDEPEND=app-text/opentype-feature-freezer dev-python/fonttools app-shells/fish app-arch/unzip X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
 DEFINED_PHASES=install postinst postrm prepare setup
 DESCRIPTION=Anonymous and neutral programming typeface focused on creating a better reading experience
 EAPI=8
@@ -11,4 +11,4 @@ RESTRICT=binchecks strip
 SLOT=0
 SRC_URI=https://github.com/eigilnikolajsen/commit-mono/releases/download/v1.143/CommitMono-1.143.zip -> commit-mono-1.143.zip
 _eclasses_=font	6d0c60c855c05ae2ba808d300440ded2
-_md5_=0f94ad8201f04cf56dbd8534759420f9
+_md5_=020b70039b7d7f28e8815ca8fd4b9b0d

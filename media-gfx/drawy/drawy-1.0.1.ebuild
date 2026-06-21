@@ -21,7 +21,7 @@ KF_MIN="6.19.0"
 
 BDEPEND="
 	>=dev-build/cmake-3.27
-	>=kde-frameworks/extra-cmake-modules-${KF_MIN}:6
+	>=kde-frameworks/extra-cmake-modules-${KF_MIN}
 	virtual/pkgconfig
 	x11-misc/shared-mime-info
 "
