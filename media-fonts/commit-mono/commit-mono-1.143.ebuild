@@ -19,14 +19,13 @@ BDEPEND="
   dev-python/fonttools
   # Kinda stupid, but hey, this is for myself
   app-shells/fish
+  app-arch/unzip
 "
 
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86 ~x64-macos"
 
 FONT_SUFFIX="ttf"
 RESTRICT="binchecks strip"
-
-BDEPEND="app-arch/unzip"
 
 S="${WORKDIR}/${MY_PN}-${PV}/ttfautohint"
 
