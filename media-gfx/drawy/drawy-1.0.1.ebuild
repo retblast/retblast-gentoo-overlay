@@ -27,15 +27,14 @@ BDEPEND="
 "
 
 DEPEND="
-	>=dev-qt/qtbase-${QT_MIN}:6[gui,widgets]
-	>=kde-frameworks/kdbusaddons-${KF_MIN}:6
+	>=dev-qt/qtbase-${QT_MIN}:6[dbus,gui,widgets]
 	>=kde-frameworks/kconfig-${KF_MIN}:6
 	>=kde-frameworks/kconfigwidgets-${KF_MIN}:6
 	>=kde-frameworks/kcoreaddons-${KF_MIN}:6
 	>=kde-frameworks/kcrash-${KF_MIN}:6
 	>=kde-frameworks/ki18n-${KF_MIN}:6
 	>=kde-frameworks/kiconthemes-${KF_MIN}:6
-	>=kde-frameworks/ksyntaxhighlighting-${KF_MIN}:6
+	>=kde-frameworks/syntax-highlighting-${KF_MIN}:6
 	>=kde-frameworks/kwidgetsaddons-${KF_MIN}:6
 	>=kde-frameworks/kxmlgui-${KF_MIN}:6
 	app-arch/zstd:=
