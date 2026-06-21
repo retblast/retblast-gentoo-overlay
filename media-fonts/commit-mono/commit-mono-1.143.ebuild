@@ -14,10 +14,11 @@ LICENSE="OFL-1.1"
 SLOT="0"
 
 # To bake in the opentype features
-BDEPEND="
+# Kinda stupid, but hey, this is for myself
+BDEPEND+="
   app-text/opentype-feature-freezer
   dev-python/fonttools
-  # Kinda stupid, but hey, this is for myself
+
   app-shells/fish
   app-arch/unzip
 "
