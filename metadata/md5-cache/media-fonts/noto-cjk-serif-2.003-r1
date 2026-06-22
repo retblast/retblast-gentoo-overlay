@@ -11,4 +11,4 @@ RESTRICT=binchecks strip
 SLOT=0
 SRC_URI=https://github.com/notofonts/noto-cjk/releases/download/Serif2.003/03_NotoSerifCJK-TTF-VF.zip -> noto-cjk-serif-2.003.zip
 _eclasses_=font	6d0c60c855c05ae2ba808d300440ded2
-_md5_=c15f76adad3a2b1725f6af60f2084832
+_md5_=e85985c540d93b2a7122e69a75df1143

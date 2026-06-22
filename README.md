@@ -5,6 +5,7 @@ This houses some packages that I use, and are not in the GURU or Gentoo's reposi
 After creating the ebuild, do
 ```
   pkgdev manifest -d $distfilesFolder $ebuild
+  pkgcheck scan $ebuild 
   ebuild $ebuild clean test install
   ebuild $ebuild clean install merge
 ```
