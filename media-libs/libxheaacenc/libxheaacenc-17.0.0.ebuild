@@ -1,6 +1,6 @@
 EAPI=8
 
-inherit multilib toolchain-funcs
+inherit multilib toolchain-funcs flag-o-matic
 
 DESCRIPTION="Fraunhofer xHE-AAC (MPEG-D USAC) encoder library from AOSP, for FFmpeg's libxheaacenc encoder"
 HOMEPAGE="https://android.googlesource.com/platform/external/aac"
@@ -24,6 +24,8 @@ IUSE=""
 RESTRICT="mirror"
 
 src_compile() {
+	append-cflags -fPIC
+
 	emake -f "${FILESDIR}"/Makefile \
 		CC="$(tc-getCC)" \
 		AR="$(tc-getAR)" \
