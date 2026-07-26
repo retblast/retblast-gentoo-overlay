@@ -1,0 +1,14 @@
+BDEPEND=X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+DEFINED_PHASES=install postinst postrm setup
+DESCRIPTION=Google's font family that aims to support all the world's languages. OTF variant
+EAPI=8
+HOMEPAGE=https://fonts.google.com/noto https://github.com/notofonts/notofonts.github.io
+INHERIT=font
+IUSE=X
+KEYWORDS=~amd64
+LICENSE=OFL-1.1
+RESTRICT=binchecks strip
+SLOT=0
+SRC_URI=https://github.com/notofonts/notofonts.github.io/archive/67b512485069e86f2e06413c46b8394d3358021d.tar.gz -> noto-20260301.tar.gz
+_eclasses_=font	6d0c60c855c05ae2ba808d300440ded2
+_md5_=9d072fa998c789943f2af8bccaaa67e9
