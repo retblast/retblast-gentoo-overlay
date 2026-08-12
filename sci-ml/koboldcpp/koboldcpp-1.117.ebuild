@@ -27,7 +27,7 @@ RDEPEND="
 	media-libs/vulkan-loader
 	$(python_gen_cond_dep '
 		dev-python/psutil[${PYTHON_USEDEP}]
-		dev-python/jinja[${PYTHON_USEDEP}]
+		dev-python/jinja2[${PYTHON_USEDEP}]
 	')
 	gui? (
 		$(python_gen_cond_dep '
