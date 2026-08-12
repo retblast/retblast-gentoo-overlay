@@ -1,0 +1,16 @@
+BDEPEND=media-libs/shaderc
+DEFINED_PHASES=compile install setup
+DEPEND=media-libs/vulkan-loader dev-util/vulkan-headers
+DESCRIPTION=An easy-to-use AI text-generation software for GGML and GGUF models
+EAPI=8
+HOMEPAGE=https://github.com/LostRuins/koboldcpp
+INHERIT=desktop python-single-r1
+IUSE=gui portable python_single_target_python3_12 python_single_target_python3_13
+KEYWORDS=~amd64
+LICENSE=AGPL-3 MIT
+RDEPEND=python_single_target_python3_12? ( dev-lang/python:3.12 ) python_single_target_python3_13? ( dev-lang/python:3.13 ) media-libs/vulkan-loader python_single_target_python3_12? ( dev-python/psutil[python_targets_python3_12(-)] dev-python/jinja[python_targets_python3_12(-)] ) python_single_target_python3_13? ( dev-python/psutil[python_targets_python3_13(-)] dev-python/jinja[python_targets_python3_13(-)] ) gui? ( python_single_target_python3_12? ( dev-python/customtkinter[python_targets_python3_12(-)] dev-python/darkdetect[python_targets_python3_12(-)] ) python_single_target_python3_13? ( dev-python/customtkinter[python_targets_python3_13(-)] dev-python/darkdetect[python_targets_python3_13(-)] ) gnome-extra/zenity )
+REQUIRED_USE=^^ ( python_single_target_python3_12 python_single_target_python3_13 )
+SLOT=0
+SRC_URI=https://github.com/LostRuins/koboldcpp/archive/refs/tags/v1.117.tar.gz -> koboldcpp-1.117.tar.gz
+_eclasses_=desktop	e447b5f77146d69797e9f03ff177f3f1	eapi9-pipestatus	d2c134036ac31c3085aebc9147f572bd	multiprocessing	45d0620f25c2f063ad6276ecd9ed9399	toolchain-funcs	58a918e3a42d0156f010dcfd43725be5	python-utils-r1	5fd9a75ca55021d3276ce969f8e28391	python-single-r1	47d8ac9be330c9366112b78fd4f8ce57
+_md5_=593cbabad9c0fa9ee08eac1876ec3657
