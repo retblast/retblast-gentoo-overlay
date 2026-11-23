@@ -3,6 +3,6 @@
 <pkgmetadata>
 	<!-- maintainer-needed -->
 	<use>
-		<flag name="vulkan-video">Build private FFmpeg 9 libraries for Vulkan video decoding and enable Intel ANV video decode in Ladybird's GPU helpers</flag>
+		<flag name="vulkan-video">Build Ladybird's FFmpeg libraries with Vulkan video decoding for H.264, HEVC, VP9, and AV1</flag>
 	</use>
 </pkgmetadata>

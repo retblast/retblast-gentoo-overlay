@@ -1,0 +1,15 @@
+--- a/libavcodec/vulkan_decode.c
++++ b/libavcodec/vulkan_decode.c
+@@ -20,2 +20,3 @@
+ #include "libavutil/refstruct.h"
++#include "av1dec.h"
+ #include "vulkan_video.h"
+@@ -849,3 +850,7 @@
+         av1_profile->stdProfile = cur_profile;
+-        av1_profile->filmGrainSupport = !(avctx->export_side_data & AV_CODEC_EXPORT_DATA_FILM_GRAIN);
++        const AV1DecContext *s = avctx->priv_data;
++        /* Drivers can support AV1 decode without film grain synthesis. */
++        av1_profile->filmGrainSupport =
++            !(avctx->export_side_data & AV_CODEC_EXPORT_DATA_FILM_GRAIN) &&
++            (!s || !s->raw_seq || s->raw_seq->film_grain_params_present);
+     }

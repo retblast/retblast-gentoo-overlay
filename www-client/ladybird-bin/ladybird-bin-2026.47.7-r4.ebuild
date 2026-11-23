@@ -9,10 +9,16 @@ DESCRIPTION="Independent web browser (official Ubuntu binary)"
 HOMEPAGE="https://ladybird.org/"
 MY_DEB="ladybird_${PV}-1~ubuntu24.04_amd64.deb"
 FFMPEG_PV="9.0.2"
-FFMPEG_DIR="/opt/ladybird/lib/ffmpeg-9"
+FFMPEG_DIR="/opt/ladybird/lib"
+FFMPEG_PATCH_URI="https://raw.githubusercontent.com/LadybirdBrowser/ladybird/${PV}/Meta/CMake/vcpkg/overlay-ports/ffmpeg"
 SRC_URI="
 	https://apt.ladybird.org/pool/main/l/ladybird/${MY_DEB}
-	vulkan-video? ( https://ffmpeg.org/releases/ffmpeg-${FFMPEG_PV}.tar.xz )
+	vulkan-video? (
+		https://ffmpeg.org/releases/ffmpeg-${FFMPEG_PV}.tar.xz
+		${FFMPEG_PATCH_URI}/0100-ladybird-symbol-version-nodes.patch -> ${P}-ffmpeg-symbols.patch
+		${FFMPEG_PATCH_URI}/0101-vulkan-decode-dpb-distinct-no-drm-modifiers.patch -> ${P}-ffmpeg-vulkan-dpb.patch
+		${FFMPEG_PATCH_URI}/0102-vulkan-av1-clear-unused-ref-frame-mvs.patch -> ${P}-ffmpeg-av1-ref-mvs.patch
+	)
 "
 
 S="${WORKDIR}"
@@ -31,6 +37,11 @@ RDEPEND="
 	media-libs/libglvnd[X]
 	media-libs/libpulse
 	media-libs/vulkan-loader
+	vulkan-video? (
+		media-libs/dav1d:=
+		media-libs/opus:=
+		virtual/zlib:=
+	)
 	!vulkan-video? (
 		>=media-video/ffmpeg-6
 		<media-video/ffmpeg-10
@@ -50,7 +61,10 @@ RDEPEND="
 "
 DEPEND="
 	vulkan-video? (
-		>=dev-util/vulkan-headers-1.3.277
+		>=dev-util/vulkan-headers-1.4.317
+		media-libs/dav1d:=
+		media-libs/opus:=
+		virtual/zlib:=
 		x11-libs/libdrm
 	)
 "
@@ -71,8 +85,6 @@ src_unpack() {
 }
 
 src_prepare() {
-	default
-
 	# Keep the bundled ICU separate from the ICU used by system FFmpeg.
 	local -a icu=( libicudata libicui18n libicuuc )
 	local name elf needed
@@ -94,6 +106,17 @@ src_prepare() {
 			patchelf "${replacements[@]}" "${elf}" || die
 		fi
 	done < <(find opt/ladybird/{bin,lib,libexec,Qt6/plugins} -type f -print0)
+
+	if use vulkan-video; then
+		cd "ffmpeg-${FFMPEG_PV}" || die
+		eapply "${DISTDIR}/${P}-ffmpeg-symbols.patch"
+		eapply "${DISTDIR}/${P}-ffmpeg-vulkan-dpb.patch"
+		eapply "${DISTDIR}/${P}-ffmpeg-av1-ref-mvs.patch"
+		eapply "${FILESDIR}/ffmpeg-av1-vulkan-film-grain.patch"
+		cd "${S}" || die
+	fi
+
+	eapply_user
 }
 
 src_configure() {
@@ -110,14 +133,16 @@ src_configure() {
 		--pkg-config="$(tc-getPKG_CONFIG)" \
 		--extra-cflags="${CFLAGS}" \
 		--extra-ldflags="${LDFLAGS}" \
-		--enable-shared --disable-static \
+		--enable-shared --disable-static --build-suffix=-ladybird \
 		--disable-autodetect --disable-everything \
 		--disable-programs --disable-doc \
 		--disable-avdevice --disable-avfilter --disable-avformat \
-		--disable-swresample --disable-swscale \
-		--enable-libdrm --enable-vulkan \
-		--enable-decoder=h264,hevc,aac \
-		--enable-hwaccel=h264_vulkan,hevc_vulkan || die
+		--disable-network --disable-swscale \
+		--enable-libdav1d --enable-libdrm --enable-libopus --enable-vulkan --enable-zlib \
+		--enable-decoder=av1,vp8,vp9,libdav1d,theora,vorbis,opus,flac,mp3float,pcm_u8,pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le,pcm_alaw,pcm_mulaw,h264,hevc,aac \
+		--enable-parser=vp8,vp9,av1,mpegaudio \
+		--enable-encoder=libopus \
+		--enable-hwaccel=h264_vulkan,hevc_vulkan,av1_vulkan,vp9_vulkan || die
 }
 
 src_compile() {
@@ -138,7 +163,12 @@ src_install() {
 
 	if use vulkan-video; then
 		emake -C "ffmpeg-${FFMPEG_PV}" DESTDIR="${D}" install-libs
-		patchelf --set-rpath '$ORIGIN' "${ED}${FFMPEG_DIR}/libavcodec.so.63" || die
+		local library
+		for library in libavcodec-ladybird.so.63 libavutil-ladybird.so.61 libswresample-ladybird.so.7; do
+			patchelf --set-rpath '$ORIGIN' "${ED}${FFMPEG_DIR}/${library}" || die
+		done
+		# The launcher uses this link to opt into the rebuilt FFmpeg.
+		dosym ../libavcodec-ladybird.so.63 "${FFMPEG_DIR}/ffmpeg-9/libavcodec.so.63"
 
 		local helper
 		for helper in SystemProbe VideoDecoderServer; do
