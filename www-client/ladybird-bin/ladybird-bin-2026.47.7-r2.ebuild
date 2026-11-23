@@ -25,6 +25,8 @@ RDEPEND="
 	media-libs/libglvnd[X]
 	media-libs/libpulse
 	media-libs/vulkan-loader
+	>=media-video/ffmpeg-6
+	<media-video/ffmpeg-10
 	>=sys-devel/gcc-13.2
 	>=sys-libs/glibc-2.39
 	x11-libs/libdrm
@@ -38,10 +40,39 @@ RDEPEND="
 	x11-libs/xcb-util-renderutil
 	x11-libs/xcb-util-wm
 "
-BDEPEND="app-arch/xz-utils"
+BDEPEND="
+	app-arch/xz-utils
+	dev-util/patchelf
+"
 
 src_unpack() {
 	unpack_deb "${MY_DEB}"
+}
+
+src_prepare() {
+	default
+
+	# Keep the bundled ICU separate from the ICU used by system FFmpeg.
+	local -a icu=( libicudata libicui18n libicuuc )
+	local name elf needed
+	local -a replacements
+	for name in "${icu[@]}"; do
+		patchelf --set-soname "${name}-ladybird.so.78" "opt/ladybird/lib/${name}.so.78" || die
+		mv "opt/ladybird/lib/${name}.so.78" "opt/ladybird/lib/${name}-ladybird.so.78" || die
+	done
+
+	while IFS= read -r -d '' elf; do
+		needed=$(patchelf --print-needed "${elf}") || die
+		replacements=()
+		for name in "${icu[@]}"; do
+			if [[ $'\n'${needed}$'\n' == *$'\n'"${name}.so.78"$'\n'* ]]; then
+				replacements+=( --replace-needed "${name}.so.78" "${name}-ladybird.so.78" )
+			fi
+		done
+		if (( ${#replacements[@]} )); then
+			patchelf "${replacements[@]}" "${elf}" || die
+		fi
+	done < <(find opt/ladybird/{bin,lib,libexec,Qt6/plugins} -type f -print0)
 }
 
 src_install() {
