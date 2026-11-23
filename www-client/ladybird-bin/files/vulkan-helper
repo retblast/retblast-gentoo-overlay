@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# The browser filters ANV_DEBUG out of the helper environment.
+export ANV_DEBUG=video-decode
+exec "$0.real" "$@"

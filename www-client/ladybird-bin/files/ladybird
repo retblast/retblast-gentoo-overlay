@@ -2,4 +2,9 @@
 
 # Use the host graphics libraries and Vulkan driver selection.
 unset LD_LIBRARY_PATH VK_DRIVER_FILES
+private_ffmpeg=/opt/ladybird/lib/ffmpeg-9/libavcodec.so.63
+if [ -z "${LADYBIRD_SYSTEM_FFMPEG_LIBAVCODEC+x}" ] && [ -r "$private_ffmpeg" ]; then
+	export LADYBIRD_SYSTEM_FFMPEG_LIBAVCODEC="$private_ffmpeg"
+fi
+
 exec /opt/ladybird/bin/Ladybird "$@"

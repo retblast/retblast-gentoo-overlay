@@ -3,12 +3,17 @@
 
 EAPI=8
 
-inherit unpacker xdg
+inherit toolchain-funcs unpacker xdg
 
 DESCRIPTION="Independent web browser (official Ubuntu binary)"
 HOMEPAGE="https://ladybird.org/"
 MY_DEB="ladybird_${PV}-1~ubuntu24.04_amd64.deb"
-SRC_URI="https://apt.ladybird.org/pool/main/l/ladybird/${MY_DEB}"
+FFMPEG_PV="9.0.2"
+FFMPEG_DIR="/opt/ladybird/lib/ffmpeg-9"
+SRC_URI="
+	https://apt.ladybird.org/pool/main/l/ladybird/${MY_DEB}
+	vulkan-video? ( https://ffmpeg.org/releases/ffmpeg-${FFMPEG_PV}.tar.xz )
+"
 
 S="${WORKDIR}"
 LICENSE="BSD-2
@@ -16,6 +21,7 @@ LICENSE="BSD-2
 	GPL-2+ IJG LGPL-2.1+ LGPL-3 MIT MPL-2.0 Unicode-3.0 ZLIB"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="+vulkan-video"
 RESTRICT="strip"
 
 RDEPEND="
@@ -25,8 +31,10 @@ RDEPEND="
 	media-libs/libglvnd[X]
 	media-libs/libpulse
 	media-libs/vulkan-loader
-	>=media-video/ffmpeg-6
-	<media-video/ffmpeg-10
+	!vulkan-video? (
+		>=media-video/ffmpeg-6
+		<media-video/ffmpeg-10
+	)
 	>=sys-devel/gcc-13.2
 	>=sys-libs/glibc-2.39
 	x11-libs/libdrm
@@ -40,13 +48,26 @@ RDEPEND="
 	x11-libs/xcb-util-renderutil
 	x11-libs/xcb-util-wm
 "
+DEPEND="
+	vulkan-video? (
+		>=dev-util/vulkan-headers-1.3.277
+		x11-libs/libdrm
+	)
+"
 BDEPEND="
 	app-arch/xz-utils
 	dev-util/patchelf
+	vulkan-video? (
+		dev-lang/nasm
+		virtual/pkgconfig
+	)
 "
 
 src_unpack() {
 	unpack_deb "${MY_DEB}"
+	if use vulkan-video; then
+		unpack "ffmpeg-${FFMPEG_PV}.tar.xz"
+	fi
 }
 
 src_prepare() {
@@ -75,6 +96,36 @@ src_prepare() {
 	done < <(find opt/ladybird/{bin,lib,libexec,Qt6/plugins} -type f -print0)
 }
 
+src_configure() {
+	use vulkan-video || return 0
+
+	cd "ffmpeg-${FFMPEG_PV}" || die
+	./configure \
+		--prefix="${EPREFIX}/opt/ladybird" \
+		--libdir="${EPREFIX}${FFMPEG_DIR}" \
+		--cc="$(tc-getCC)" \
+		--ar="$(tc-getAR)" \
+		--nm="$(tc-getNM)" \
+		--ranlib="$(tc-getRANLIB)" \
+		--pkg-config="$(tc-getPKG_CONFIG)" \
+		--extra-cflags="${CFLAGS}" \
+		--extra-ldflags="${LDFLAGS}" \
+		--enable-shared --disable-static \
+		--disable-autodetect --disable-everything \
+		--disable-programs --disable-doc \
+		--disable-avdevice --disable-avfilter --disable-avformat \
+		--disable-swresample --disable-swscale \
+		--enable-libdrm --enable-vulkan \
+		--enable-decoder=h264,hevc,aac \
+		--enable-hwaccel=h264_vulkan,hevc_vulkan || die
+}
+
+src_compile() {
+	use vulkan-video || return 0
+
+	emake -C "ffmpeg-${FFMPEG_PV}"
+}
+
 src_install() {
 	sed -i 's|^Exec=/opt/ladybird/bin/Ladybird|Exec=/usr/bin/ladybird|' \
 		usr/share/applications/org.ladybird.Ladybird.desktop \
@@ -84,4 +135,15 @@ src_install() {
 	cp -a --no-preserve=ownership opt/ladybird "${ED}/opt/" || die
 	cp -a --no-preserve=ownership usr/share/. "${ED}/usr/share/" || die
 	install -m 0755 "${FILESDIR}/ladybird" "${ED}/usr/bin/ladybird" || die
+
+	if use vulkan-video; then
+		emake -C "ffmpeg-${FFMPEG_PV}" DESTDIR="${D}" install-libs
+		patchelf --set-rpath '$ORIGIN' "${ED}${FFMPEG_DIR}/libavcodec.so.63" || die
+
+		local helper
+		for helper in SystemProbe VideoDecoderServer; do
+			mv "${ED}/opt/ladybird/libexec/${helper}" "${ED}/opt/ladybird/libexec/${helper}.real" || die
+			install -m 0755 "${FILESDIR}/vulkan-helper" "${ED}/opt/ladybird/libexec/${helper}" || die
+		done
+	fi
 }

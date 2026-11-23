@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<!-- maintainer-needed -->
+	<use>
+		<flag name="vulkan-video">Build private FFmpeg 9 libraries for Vulkan video decoding and enable Intel ANV video decode in Ladybird's GPU helpers</flag>
+	</use>
+</pkgmetadata>
