@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Use the host graphics libraries and Vulkan driver selection.
+unset LD_LIBRARY_PATH VK_DRIVER_FILES
+exec /opt/ladybird/bin/Ladybird "$@"

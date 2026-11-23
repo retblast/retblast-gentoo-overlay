@@ -45,8 +45,12 @@ src_unpack() {
 }
 
 src_install() {
-	dodir /opt /usr/share
+	sed -i 's|^Exec=/opt/ladybird/bin/Ladybird|Exec=/usr/bin/ladybird|' \
+		usr/share/applications/org.ladybird.Ladybird.desktop \
+		usr/share/dbus-1/services/org.ladybird.Ladybird.service || die
+
+	dodir /opt /usr/bin /usr/share
 	cp -a --no-preserve=ownership opt/ladybird "${ED}/opt/" || die
 	cp -a --no-preserve=ownership usr/share/. "${ED}/usr/share/" || die
-	dosym ../../opt/ladybird/bin/Ladybird /usr/bin/ladybird
+	install -m 0755 "${FILESDIR}/ladybird" "${ED}/usr/bin/ladybird" || die
 }
